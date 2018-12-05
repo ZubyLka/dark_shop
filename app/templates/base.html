@@ -19,7 +19,10 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url_for('index') }}">Home</a></li>
-                    {% if not current_user.is_anonymous %}
+                    {% if not current_user.is_anonymous and current_user.vip %}
+                    <li><a href="{{ url_for('shop') }}">Shop</a></li>
+                    <li><a href="{{ url_for('vip') }}">Vip</a></li>
+                    {% else %}
                     <li><a href="{{ url_for('shop') }}">Shop</a></li>
                     {% endif %}
                 </ul>

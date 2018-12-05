@@ -3,7 +3,7 @@
 from app import app
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User
+from app.models import User, Item
 from app.forms import LoginForm, RegistrationForm
 from werkzeug.urls import url_parse
 from app import db
@@ -48,7 +48,7 @@ def register():
 
 	form = RegistrationForm()
 	if form.validate_on_submit():
-		user = User(username=form.username.data)
+		user = User(username=form.username.data, cash=1000, vip=0)
 		user.set_password(form.password.data)
 		db.session.add(user)
 		db.session.commit()
@@ -60,6 +60,29 @@ def register():
 @app.route('/shop', methods=['GET', 'POST'])
 @login_required
 def shop():
+	items_temp = []
 	if current_user.is_authenticated:
-		flash('Теперь тебе доступен рынок!')
-		return render_template('shop.html', title='Shop')
+		items_temp = Item.query.all()
+		items = []
+		for item in items_temp:
+			if not item.is_vip:
+				items.append(item)
+		return render_template('shop.html', title='Shop', items=items)
+
+
+@app.route('/vip', methods=['GET', 'POST'])
+@login_required
+def vip():
+	items_temp = []
+	if current_user.is_authenticated:
+		if not current_user.vip:
+			return redirect(url_for('shop'))
+			
+		items_temp = Item.query.all()
+		items = []
+		for item in items_temp:
+			if item.is_vip:
+				items.append(item)
+
+
+	return render_template('vip.html', title='Vip Shop', items=items)

@@ -39,6 +39,7 @@ class Item(db.Model):
 	item_id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(140))
 	description = db.Column(db.String(1024))
+	is_vip = db.Column(db.Boolean)
 	price = db.Column(db.Integer)
 
 	def __repr__(self):
