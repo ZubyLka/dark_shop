@@ -22,8 +22,10 @@
                     {% if not current_user.is_anonymous and current_user.vip %}
                     <li><a href="{{ url_for('shop') }}">Shop</a></li>
                     <li><a href="{{ url_for('vip') }}">Vip</a></li>
+                    <li><a href="{{ url_for('search') }}">Search</a></li>
                     {% else %}
                     <li><a href="{{ url_for('shop') }}">Shop</a></li>
+                    <li><a href="{{ url_for('search') }}">Search</a></li>
                     {% endif %}
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

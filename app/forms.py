@@ -23,3 +23,7 @@ class RegistrationForm(FlaskForm):
 		if user is not None:
 			raise ValidationError('Имя пользователя занято!')
 
+class SearchingForm(FlaskForm):
+	item_id = StringField('Введите артикул товара', validators=[DataRequired()])
+	submit = SubmitField('Поиск')
+
